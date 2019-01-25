@@ -63,18 +63,36 @@
     components: {XButton, XTextarea, Group},
     data() {
       return {
-        htmlCode: ' <body>\n' +
-          '  <h1>Jade - node template engine</h1>\n' +
-          '  <div class="col" id="container">\n' +
-          '    <p>You are amazing</p>\n' +
-          '    <p>\n' +
-          '      Jade is a terse and simple\n' +
-          '      templating language with a\n' +
-          '      strong focus on performance\n' +
-          '      and powerful features.\n' +
-          '    </p>\n' +
-          '  </div>\n' +
-          '</body>',
+        htmlCode: '<Menu mode="horizontal" :theme="theme1" active-name="1">\n' +
+          '    <MenuItem name="1">\n' +
+          '        <Icon type="ios-paper"/>\n' +
+          '        内容管理\n' +
+          '    </MenuItem>\n' +
+          '    <MenuItem name="2">\n' +
+          '        <Icon type="ios-people"/>\n' +
+          '        用户管理\n' +
+          '    </MenuItem>\n' +
+          '    <Submenu name="3">\n' +
+          '        <template slot="title">\n' +
+          '            <Icon type="ios-stats"/>\n' +
+          '            统计分析\n' +
+          '        </template>\n' +
+          '        <MenuGroup title="使用">\n' +
+          '            <MenuItem name="3-1">新增和启动</MenuItem>\n' +
+          '            <MenuItem name="3-2">活跃分析</MenuItem>\n' +
+          '            <MenuItem name="3-3">时段分析</MenuItem>\n' +
+          '        </MenuGroup>\n' +
+          '        <MenuGroup title="留存">\n' +
+          '            <MenuItem name="3-4">用户留存</MenuItem>\n' +
+          '            <MenuItem name="3-5">流失用户</MenuItem>\n' +
+          '        </MenuGroup>\n' +
+          '    </Submenu>\n' +
+          '    <MenuItem name="4">\n' +
+          '        <Icon type="ios-construct"/>\n' +
+          '        综合设置\n' +
+          '    </MenuItem>\n' +
+          '</Menu>\n' +
+          '    ',
         jadeCode: '',
       }
     },
@@ -109,6 +127,7 @@
             i++;
           }
         });
+
         //进行分级
         let c = 0;
         let rank = 0;//目前所在等级
@@ -117,14 +136,14 @@
           let labelString = "";
           if(codeString.search(/<\w+\W*\w*>/i) > -1){
             labelString = codeString.substring(codeString.search(/<\w+\W*\w*/i)+1,codeString.search(/\s*>/i)).replace(/\//i,"");
-            labelArray[classCount] = labelString;
+            labelArray[classCount] = labelString.trim();
             classCountArray[classCount] = classCount;
             classCount++;
             rank++;
           }else if(codeString.search(/<\w+\W*\w*\s*\w+/i) > -1){
             labelString = codeString.substring(codeString.search(/<\w+\W*\w*\s*\w*/i),codeString.search(/\s*>/i)+1);
             labelString = getLabelHead(labelString);
-            labelArray[classCount] = labelString;
+            labelArray[classCount] = labelString.trim();
             classCountArray[classCount] = classCount;
             classCount++;
             rank++;
@@ -134,7 +153,7 @@
             labelString = codeString.substring(codeString.search(/<\/\w+\W*\w*/i)+2,codeString.search(/\s*>/i));
             if(labelArray.length > 0){
               let c1 = labelArray.length ;
-              for( ;c1 > 0 ; c1--){
+              for( ;c1 >= 0 ; c1--){
                 if(labelString == labelArray[c1]){
                   labelArray.splice(c1,1,"");
                   break;
@@ -143,7 +162,7 @@
               classCountArray[c1] = rank;
             }
           }
-          if(codeString.search(/\/\s*>/i) > -1){
+          if(codeString.search(/\/\s*>/i) > -1){//自闭标签
             rank--;
             labelArray.splice(classCount-1,1,"");
             classCountArray[classCount-1]=rank;
@@ -151,9 +170,7 @@
           classStrArray[c] = v
           c++;
         });
-        console.log(classStrArray);
-        console.log(labelArray);
-        console.log(classCountArray);
+
         //进行转换
         let j = 0;
         classStrArray.forEach( v => {
@@ -222,24 +239,38 @@
           }
           if(codeString.search(/<\/\w+\W*\w*/i) > -1){//标签结束处理(\W*\w*是针对有特殊字符的标签，如：x-dialog)
             codeString =  codeString.replace(/<\/\w+\W*\w*/i,"").replace(/>/,"");
+            labelFlag = false;
           }
-          if(!innerFlag && !labelFlag && !scriptFlag && codeString.search(/\w/i) > -1 && codeString.search(/</i) < 0){//文字段落处理
+          if(codeString.search(/\/\s*>/i) > -1){
+            labelFlag = false;
+          }
+          if(!innerFlag && !labelFlag && !scriptFlag && (codeString.search(/\w/i) > -1 || codeString.search(/[\u4e00-\u9fa5]/g) > -1) && codeString.search(/</i) < 0){//文字段落处理
             let pageString =  codeString.substring(codeString.search(/\s\w/i), codeString.length);
-            let tempString =  pageString.replace(/\s/i,"| ");
+            let tempString =  pageString.replace(/\s+/i,"| ");
             codeString = codeString.replace(pageString,tempString);
           }
           if(codeString.trim("").length == 0){
             return;
           }
-          if(classCountArray[j] != 0){//进行权重缩进
-            for(let z = classCountArray[j]; z > 0 ; z--){
-              codeString = "    "+codeString;
-            }
-          }
           newStrArray[j] = codeString;
           j++;
         });
 
+        //处理段落分级
+        let p = 0;
+        newStrArray.forEach( v => {
+          let codeString = v;
+          if((codeString.search(/\|\s\w+/i) > -1 || codeString.search(/\|\s[\u4e00-\u9fa5]/g) > -1)&& p!=0){//文字段落处理
+            classCountArray.splice(p,0,classCountArray[p-1]);
+          }
+          if(classCountArray[p] != 0 && p < classCountArray.length){//进行权重缩进
+            for(let z = classCountArray[p]; z > 0 ; z--){
+              codeString = "    "+codeString;
+            }
+          }
+          newStrArray[p] = codeString;
+          p++;
+        });
         this.jadeCode = newStrArray.join("<br111>").replace(/<br111>/g,"\n");
       },
       copyCode () {
