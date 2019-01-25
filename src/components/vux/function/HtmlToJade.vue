@@ -1,0 +1,263 @@
+<template lang="jade">
+  -var c = 'HtmlToJade'
+  -var wrap = c + '__wrap'
+
+  div(class="#{wrap}")
+    p Html to Jade auto
+    group(title="Html代码")
+      x-textarea(:show-counter="false", :rows="5", :height="220", @on-change="htmlToJade(htmlCode)",v-model="htmlCode", id = "abc")
+    group(title="Jade代码")
+      x-textarea(:show-counter="false", :rows="5", :height="220" , v-model="jadeCode", readonly)
+      textarea(id="jadeText", v-model="jadeCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
+    x-button(mini, type="primary", @click.native="copyCode()") 复制代码
+
+
+</template>
+
+<script>
+  import { XButton, XTextarea, Group } from 'vux'
+
+  //全部替代的函数
+  let allReplace = (tempString,oldVal,newVal) => {
+    if(tempString.search(/\/</i) > -1){
+      return tempString;
+    }
+    let reg = new RegExp(oldVal,"g");
+    return tempString.replace(reg,newVal);
+  }
+  //获取有属性的标签头
+  let getLabelHead = (headStr) => {
+    let headString = headStr
+    let index1 = headString.search(/\s@\w+/i);//@的下标
+    let index2 = headString.search(/\s:\w+/i);;//：的下标
+    let index3 = headString.search(/\s\w+/i);;//属性字母的下标
+    if(index1 == -1 && index2 == -1){
+      headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s\w+/i));
+    }else if(index2 == -1 && index3 == -1){
+      headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s@\w+/i));
+    }else if(index1 == -1 && index3 == -1){
+      headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s:\w+/i));
+    }else if(index1 == -1 && index3 != -1 && index2 != -1){
+      if(index3 < index2){
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s\w+/i));
+      }else{
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s:\w+/i));
+      }
+    }else if(index2 == -1 && index3 != -1 && index1 != -1){
+      if(index3 < index1){
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s\w+/i));
+      }else{
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s@\w+/i));
+      }
+    }else if(index3 == -1 && index1 != -1 && index2 != -1) {
+      if (index1 < index2) {
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i) + 1, headString.search(/\s@\w+/i));
+      } else {
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i) + 1, headString.search(/\s:\w+/i));
+      }
+    }
+    return headString;
+  }
+
+  export default {
+    components: {XButton, XTextarea, Group},
+    data() {
+      return {
+        htmlCode: ' <body>\n' +
+          '  <h1>Jade - node template engine</h1>\n' +
+          '  <div class="col" id="container">\n' +
+          '    <p>You are amazing</p>\n' +
+          '    <p>\n' +
+          '      Jade is a terse and simple\n' +
+          '      templating language with a\n' +
+          '      strong focus on performance\n' +
+          '      and powerful features.\n' +
+          '    </p>\n' +
+          '  </div>\n' +
+          '</body>',
+        jadeCode: '',
+      }
+    },
+    methods: {
+      htmlToJade (htmlCode) {
+        let specialAttributeArr = ['required'];//针对处理特殊的单个属性，如：required
+        let oldStrArray = htmlCode.replace(/\n/g,"<br111>").split("<br111>");
+        let tabStrArray = [];
+        let classStrArray = [];
+        let newStrArray = [];
+        let labelArray = [];
+        let classCountArray = [];//阶级权重
+        let classCount = 0;
+        let scriptFlag = false;//判断是否是script标签
+        let innerFlag =false;//判断是否还在标签内
+        let i = 0;
+        //进行分行
+        oldStrArray.forEach( v => {
+          let codeString = v;
+          codeString = allReplace(codeString,"<","<br111><")
+          let classArray = codeString.split("<br111>")
+          if(classArray.length > 0){
+            classArray.forEach( v1 => {
+              if(v1.trim("").length == 0){
+                return;
+              }
+              tabStrArray[i] = v1;
+              i++
+            });
+          }else{
+            tabStrArray[i] = codeString;
+            i++;
+          }
+        });
+        //进行分级
+        let c = 0;
+        let rank = 0;//目前所在等级
+        tabStrArray.forEach( v => {
+          let codeString = v;
+          let labelString = "";
+          if(codeString.search(/<\w+\W*\w*>/i) > -1){
+            labelString = codeString.substring(codeString.search(/<\w+\W*\w*/i)+1,codeString.search(/\s*>/i)).replace(/\//i,"");
+            labelArray[classCount] = labelString;
+            classCountArray[classCount] = classCount;
+            classCount++;
+            rank++;
+          }else if(codeString.search(/<\w+\W*\w*\s*\w+/i) > -1){
+            labelString = codeString.substring(codeString.search(/<\w+\W*\w*\s*\w*/i),codeString.search(/\s*>/i)+1);
+            labelString = getLabelHead(labelString);
+            labelArray[classCount] = labelString;
+            classCountArray[classCount] = classCount;
+            classCount++;
+            rank++;
+          }
+          if(codeString.search(/<\/\w+\W*\w*/i) > -1){
+            rank--;
+            labelString = codeString.substring(codeString.search(/<\/\w+\W*\w*/i)+2,codeString.search(/\s*>/i));
+            if(labelArray.length > 0){
+              let c1 = labelArray.length ;
+              for( ;c1 > 0 ; c1--){
+                if(labelString == labelArray[c1]){
+                  labelArray.splice(c1,1,"");
+                  break;
+                }
+              }
+              classCountArray[c1] = rank;
+            }
+          }
+          if(codeString.search(/\/\s*>/i) > -1){
+            rank--;
+            labelArray.splice(classCount-1,1,"");
+            classCountArray[classCount-1]=rank;
+          }
+          classStrArray[c] = v
+          c++;
+        });
+        console.log(classStrArray);
+        console.log(labelArray);
+        console.log(classCountArray);
+        //进行转换
+        let j = 0;
+        classStrArray.forEach( v => {
+          let codeString = v;
+          let labelFlag = false;//判断是否是有标签
+
+          if(codeString.search(/<!DOCTYPE html>/i) > -1){//特殊处理<!DOCTYPE html>标签
+            codeString = codeString.replace(/<!/i,"").replace(/>/i," ");
+            labelFlag = true;
+          }
+          if(codeString.search(/<script\s\w/i) > -1 || codeString.search(/<script/i) > -1){//特殊处理script标签
+            scriptFlag = true;
+          }
+          if(codeString.search(/<\/script>/i) > -1){//特殊处理script标签
+            scriptFlag = false;
+          }
+          if(codeString.search(/<\w+\W*\w*>/i) > -1){//一般标签开始处理(\W*\w*是针对有特殊字符的标签，如：x-dialog)
+            codeString =  codeString.replace(/</i,"").replace(/\/\s*>/i," ").replace(/>/i," ");
+            labelFlag = true;
+          }
+          if(codeString.search(/<\w+\W*\w*\s*\w+/i) > -1) {//含有属性的标签开始处理(\W*\w*是针对有特殊字符的标签，如：x-dialog)
+            let headString = codeString.substring(codeString.search(/<\w+\W*\w*\s*\w*/i),codeString.search(/\s*>/i)+1);
+            headString = getLabelHead(headString);
+            codeString = codeString.replace("<"+headString,""+headString+"(").replace(/\(\s*/i,"(").replace(/\/\s*>/i,") ").replace(/>/i,") ");
+            let tempArray = codeString.split("");
+            let z = 0;
+            for( z = tempArray.length ; z > 0 ; z--){
+              if(tempArray[z]=="\"" || tempArray[z]=="\'"){
+                innerFlag = true;
+                break;
+              }
+              if(tempArray[z]==")"){
+                innerFlag = false;
+                break;
+              }
+            }
+            let attributeString = codeString.substring(codeString.search(/\(/i)+1,z);
+            let tempArray1 = attributeString.split("");
+
+            let attributeFlag = false;//判断是否进入属性里面
+            let count = 0;
+            for(let k = 0; k < tempArray1.length; k++){
+              let temp = tempArray1[k];
+              if(temp == "="){
+                attributeFlag = true;
+              }else if(temp == "\"" && count > 0 && attributeFlag){
+                attributeFlag = false;
+                tempArray1[k] = "\","
+                count = 0;
+              }else if(temp == "\"" && attributeFlag){
+                count ++;
+              }
+            }
+            let tempString = tempArray1.join("");
+
+            if(specialAttributeArr.length > 0){//特殊属性处理，如：required
+              specialAttributeArr.forEach( v1 => {
+                if(tempString.search(v1) > -1){
+                  let temp2 = tempString.substring(tempString.search(v1),tempString.search(v1)+v1.length);
+                  tempString = tempString.replace(temp2,temp2+",");
+                }
+              })
+            }
+            codeString = codeString.replace(/\s*\(/i,"(").replace(attributeString,tempString).replace(/,\s*\)/i,")");
+            labelFlag = true;
+          }
+          if(codeString.search(/<\/\w+\W*\w*/i) > -1){//标签结束处理(\W*\w*是针对有特殊字符的标签，如：x-dialog)
+            codeString =  codeString.replace(/<\/\w+\W*\w*/i,"").replace(/>/,"");
+          }
+          if(!innerFlag && !labelFlag && !scriptFlag && codeString.search(/\w/i) > -1 && codeString.search(/</i) < 0){//文字段落处理
+            let pageString =  codeString.substring(codeString.search(/\s\w/i), codeString.length);
+            let tempString =  pageString.replace(/\s/i,"| ");
+            codeString = codeString.replace(pageString,tempString);
+          }
+          if(codeString.trim("").length == 0){
+            return;
+          }
+          if(classCountArray[j] != 0){//进行权重缩进
+            for(let z = classCountArray[j]; z > 0 ; z--){
+              codeString = "    "+codeString;
+            }
+          }
+          newStrArray[j] = codeString;
+          j++;
+        });
+
+        this.jadeCode = newStrArray.join("<br111>").replace(/<br111>/g,"\n");
+      },
+      copyCode () {
+        var ele = document.getElementById("jadeText");
+        ele.select();
+        document.execCommand("Copy");
+      }
+    },
+  }
+
+</script>
+<style>
+  @c HtmlToJade {
+    @d wrap {
+      p{
+        font-size: 20px;
+        text-align: center;
+      }
+    }
+  }
+</style>

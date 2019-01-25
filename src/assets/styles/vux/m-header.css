@@ -1,0 +1,158 @@
+@c m-header {
+  @d wrap {
+    position: fixed;
+    top: 0;
+    height: 3rem;
+    width: 100%;
+    z-index: 999;
+    .vux-header {
+      z-index: 3;
+      background: black;
+      .iconfont {
+      //color: white;
+      }
+    }
+    .vux-header-title {
+      text-align: center;
+    }
+  }
+  @d logo {
+    img {
+      width: 4rem !important;
+      vertical-align: middle;
+    }
+  }
+  @d operator {
+    display: flex;
+    align-items: center;
+    > :not(:last-child) {
+      margin-left: 0 !important;
+      margin-right: .5rem !important;
+    }
+    .icon-ren {
+      font-size: 1.5rem;
+    }
+    .icon-fangdajing {
+      font-size: 1.3rem;
+    }
+    .icon-en {
+      font-size: 1.6rem;
+    }
+    .icon-youcecaidan {
+      font-size: 1.3rem;
+    }
+  }
+  @d search {
+    position: fixed;
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    background: white;
+    z-index: 9999;
+    input {
+      flex: 1;
+      font-size: 1rem;
+      color: #666 transparent;
+    }
+  }
+  @d menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    z-index: 2;
+    padding-bottom: 1rem;
+  //height: 20rem;
+    color: white black;
+  }
+  @d menu_item {
+    > :first-child {
+      position: relative;
+      padding: .6rem 1rem;
+      color: white black;
+      border-bottom: 1px solid #21201f;
+      &:after {
+        position: absolute;
+        right: 1rem;
+        content: '';
+        width: .5rem;
+        height: .5rem;
+        border: solid red;
+        border-width: 1px 1px 0 0;
+        top: .8rem;
+        transform: rotate(135deg);
+      }
+      &.active {
+        color: red white;
+        border-color: #ccc;
+        &:after {
+          top: 1.1rem;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+    > :last-child {
+      display: flex;
+      flex-wrap: wrap;
+      color: black white;
+      padding-bottom: 1rem;
+      &:not(.active) {
+        display: none;
+      }
+    }
+  }
+  @d menu_item_item {
+    text-align: center;
+    width: 50%;
+    img {
+      width: 100%;
+    }
+  }
+  @d menu_link {
+    display: block;
+    padding: .6rem 1rem;
+    color: white black;
+    border-bottom: 1px solid #21201f;
+  }
+  @d mask {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, .5);
+    &:not(.active) {
+      display: none;
+    }
+  }
+  @d sub_menu {
+    position: absolute;
+    z-index: 9999;
+    top: 3.2rem;
+    right: 1rem;
+    color: white gray;
+    width: 5rem;
+    border-radius: .2rem;
+    &:not(.active) {
+      display: none;
+    }
+    > :nth-child(n) {
+      padding: .2rem 0;
+      text-align: center;
+    }
+    > :not(:last-child) {
+      border-bottom: 1px solid white;
+    }
+    &:before {
+      content: "";
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translate(-50%);
+      border: 8px solid;
+      border-color: transparent transparent gray;
+    }
+  }
+}

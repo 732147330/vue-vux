@@ -1,0 +1,150 @@
+@c m-footer {
+  @d wrap {
+    position: relative;
+    margin-top: 1rem;
+  }
+  @d logo {
+    padding-left: 1rem;
+    img {
+      width: 3rem;
+    }
+  }
+  @d info {
+    padding: .2rem 1rem;
+  }
+  @d title {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    img {
+      width: 3rem;
+      margin-right: .5rem;
+    }
+  }
+  @d tel {
+    margin: .8rem 0 0;
+    > :nth-child(1) {
+      font-size: 1.4rem;
+    }
+    > :nth-child(2) {
+      font-size: 1.4rem;
+      color: #cf1430;
+      margin: 0 .5rem;
+    }
+    > :nth-child(3) {
+      margin: 0 .3rem;
+    }
+  }
+  @d tip {
+    font-size: .7rem;
+    margin: .4rem 0 .8rem;
+  }
+  @d email {
+    display: flex;
+    align-items: center;
+    .iconfont {
+      margin-top: .1rem;
+      margin-right: .3rem;
+    }
+  }
+  @d navigator {
+    position: relative;
+    margin: 0 0 .8rem;
+    padding: .8rem 1rem 0;
+  }
+  @d navigator_item {
+    display: flex;
+    margin-bottom: .5rem;
+    line-height: 1.5rem;
+    > :first-child {
+      font-size: 1rem;
+      width: 3rem;
+    }
+    > :last-child {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      > a, > span {
+        color: #bbb;
+        &:not(:last-child) {
+          position: relative;
+          margin-right: 2rem;
+          &:after {
+            content: '';
+            position: absolute;
+            top: .3rem;
+            right: -1rem;
+            height: 1rem;
+            width: 1px;
+            background: #bbb;
+          }
+        }
+      }
+      > a, > span {
+        display: inline-block;
+        margin-top: -.1rem;
+        margin-right: .4rem;
+        img {
+          width: 1rem;
+          vertical-align: middle;
+        }
+        > span {
+          margin-left: .5rem;
+        }
+      }
+    }
+  }
+  @d address {
+    font-size: .7rem;
+    line-height: 1.2rem;
+    color: #666 #21201f;
+    padding: .5rem .8rem;
+  }
+  @d mask {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    &:not(.active) {
+      display: none;
+    }
+  }
+  @d weixin {
+    position: fixed;
+    color: black white;
+    width: 100%;
+    bottom: -13rem;
+    text-align: center;
+    height: 13rem;
+    transition: all .1s;
+    > :first-child {
+      margin-top: .6rem;
+    }
+    img {
+      width: 11rem;
+    }
+    &.active {
+      bottom: 0;
+    }
+    .icon-guanbi {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+  @d toTop {
+    position: absolute;
+    bottom: 6.6rem;
+    right: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: .8rem;
+    .iconfont {
+      font-size: 1.5rem;
+      color: red;
+      margin-left: .3rem;
+    }
+  }
+}

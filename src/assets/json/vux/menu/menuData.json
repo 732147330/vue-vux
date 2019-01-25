@@ -1,0 +1,149 @@
+[
+  {
+    "title": "comp",
+    "name": "组件",
+    "values": [
+      {
+        "title": "数据展示",
+        "values": ["timeline"]
+      },
+      {
+        "title": "弹窗提示",
+        "values": [
+          "actionsheet",
+          "alert",
+          "confirm",
+          "msg",
+          "popover",
+          "popup-header",
+          "popup","toast",
+          "x-dialog"]
+      },
+      {
+        "title": "加载",
+        "values": [
+          "inline-loading",
+          "load-more",
+          "loading",
+          "spinner"]
+      },
+      {
+        "title": "导航",
+        "values": [
+          "button-tab",
+          "drawer",
+          "tab",
+          "tabbar",
+          "x-header"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "chart",
+    "name": "图表",
+    "values": [
+      {
+        "title": "折线图",
+        "names": [
+          "基本折线图",
+          "折线图：平滑曲线",
+          "折线图：实时折线",
+          "折线图：渐变",
+          "折线图：对比",
+          "折线图：显示点"
+        ],
+        "values": [
+          "basic-graphMap",
+          "smooth-graphMap",
+          "realTime-graphMap",
+          "gradient-graphMap",
+          "comparison-graphMap",
+          "displayDot-graphMap"
+        ]
+      },
+      {
+        "title": "面积图",
+        "names": [
+          "基础面积图",
+          "层叠面积图",
+          "带负值面积图",
+          "渐变填充面积图",
+          "区域图（存在空值）",
+          "对比面积图：美国、苏联核储备对比"
+        ],
+        "values": [
+          "basic-areaMap",
+          "stack-areaMap",
+          "negative-areaMap",
+          "gradient-areaMap",
+          "empty-areaMap",
+          "comparison-areaMap"
+        ]
+      },
+      {
+        "title": "柱状图",
+        "names": [
+          "层叠柱状图",
+          "分组柱状图",
+          "百分比柱状图",
+          "基础柱状图"
+        ],
+        "values": [
+          "stack-barMap",
+          "group-barMap",
+          "percentage-barMap",
+          "basic-barMap"
+        ]
+      },
+      {
+        "title": "环形图",
+        "names": [
+          "环图: 资产配置",
+          "饼图",
+          "基础环形图(x-circle)",
+          "渐变环形图(x-circle)"
+        ],
+        "values": [
+          "asset-circularMap",
+          "pie-circularMap",
+          "basic-circularMap",
+          "gradient-circularMap"
+        ]
+      },
+      {
+        "title": "散点图",
+        "names": [
+          "基础散点图"
+        ],
+        "values": [
+          "scatter-plotMap"
+        ]
+      },
+      {
+        "title": "自定义",
+        "names": [
+          "自定义渲染逻辑"
+        ],
+        "values": [
+          "customRendering-map"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "function",
+    "name": "函数",
+    "values": [
+      {
+        "title": "反编译工具",
+        "names": [
+          "Html to Jade"
+        ],
+        "values": [
+          "HtmlToJade"
+        ]
+      }
+    ]
+  }
+]
