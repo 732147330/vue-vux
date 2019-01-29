@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 //引用json菜单数据
+
 //vux
 import vuxMenuData from './assets/json/vux/menu/menuData'
 //aeg
@@ -23,3 +24,7 @@ export default new Vuex.Store({
     }
   }
 })
+
+
+
+

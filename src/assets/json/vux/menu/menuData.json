@@ -143,7 +143,17 @@
         "values": [
           "HtmlToJade"
         ]
+      },
+      {
+        "title": "一般函数功能",
+        "names": [
+          "扁平化数组转树状数组"
+        ],
+        "values": [
+          "FlattenedToDendritic"
+        ]
       }
     ]
   }
 ]
+
