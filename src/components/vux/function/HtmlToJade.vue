@@ -55,6 +55,14 @@
       } else {
         headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i) + 1, headString.search(/\s:\w+/i));
       }
+    }else{
+      if (index1 < index2 && index1 < index3) {
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i) + 1, headString.search(/\s@\w+/i));
+      } else if (index2 < index1 && index2 < index3 ){
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i) + 1, headString.search(/\s:\w+/i));
+      }else if (index3 < index1 && index3 < index2 ){
+        headString = headString.substring(headString.search(/<\w+\W*\w*\s*\w+/i)+1,headString.search(/\s\w+/i));
+      }
     }
     return headString;
   }
@@ -63,36 +71,20 @@
     components: {XButton, XTextarea, Group},
     data() {
       return {
-        htmlCode: '<Menu mode="horizontal" :theme="theme1" active-name="1">\n' +
-          '    <MenuItem name="1">\n' +
-          '        <Icon type="ios-paper"/>\n' +
-          '        内容管理\n' +
-          '    </MenuItem>\n' +
-          '    <MenuItem name="2">\n' +
-          '        <Icon type="ios-people"/>\n' +
-          '        用户管理\n' +
-          '    </MenuItem>\n' +
-          '    <Submenu name="3">\n' +
-          '        <template slot="title">\n' +
-          '            <Icon type="ios-stats"/>\n' +
-          '            统计分析\n' +
-          '        </template>\n' +
-          '        <MenuGroup title="使用">\n' +
-          '            <MenuItem name="3-1">新增和启动</MenuItem>\n' +
-          '            <MenuItem name="3-2">活跃分析</MenuItem>\n' +
-          '            <MenuItem name="3-3">时段分析</MenuItem>\n' +
-          '        </MenuGroup>\n' +
-          '        <MenuGroup title="留存">\n' +
-          '            <MenuItem name="3-4">用户留存</MenuItem>\n' +
-          '            <MenuItem name="3-5">流失用户</MenuItem>\n' +
-          '        </MenuGroup>\n' +
-          '    </Submenu>\n' +
-          '    <MenuItem name="4">\n' +
-          '        <Icon type="ios-construct"/>\n' +
-          '        综合设置\n' +
-          '    </MenuItem>\n' +
-          '</Menu>\n' +
-          '    ',
+        htmlCode: '<datetime-view v-model="value1" ref="datetime" :format="format"></datetime-view>\n' +
+          '    <p class="info">{{ $t(\'Current value\') }}: {{ value1 }}</p>\n' +
+          '    <div style="padding:15px;">\n' +
+          '      <x-button @click.native="changeValue(\'2017-11-11\')" :disabled="format !== \'YYYY-MM-DD\'" type="primary"> {{ $t(\'Set 2017-11-11\') }} </x-button>\n' +
+          '      <x-button @click.native="changeValue(\'2016-08-08\')" :disabled="format !== \'YYYY-MM-DD\'" type="primary"> {{ $t(\'Set 2016-08-08\') }} </x-button>\n' +
+          '      <x-button @click.native="toggleFormat" :disabled="format === \'YYYY-MM-DD HH\'" type="primary"> {{ $t(\'Toggle format\') }} </x-button>\n' +
+          '      <x-button @click.native="changeFormatAndValue" type="primary"> {{ $t(\'Format 2019-10-23 10\') }} </x-button>\n' +
+          '      <x-button @click.native="showPopup = true" type="primary"> {{ $t(\'Show popup with datetime-view\') }} </x-button>\n' +
+          '    </div>\n' +
+          '    <div v-transfer-dom>\n' +
+          '      <popup v-model="showPopup">\n' +
+          '        <datetime-view v-model="value2"></datetime-view>\n' +
+          '      </popup>\n' +
+          '    </div>',
         jadeCode: '',
       }
     },
@@ -263,7 +255,7 @@
           if((codeString.search(/\|\s\w+/i) > -1 || codeString.search(/\|\s[\u4e00-\u9fa5]/g) > -1)&& p!=0){//文字段落处理
             classCountArray.splice(p,0,classCountArray[p-1]);
           }
-          if(classCountArray[p] != 0 && p < classCountArray.length){//进行权重缩进
+          if(p < classCountArray.length){//进行权重缩进
             for(let z = classCountArray[p]; z > 0 ; z--){
               codeString = "    "+codeString;
             }
@@ -271,6 +263,7 @@
           newStrArray[p] = codeString;
           p++;
         });
+
         this.jadeCode = newStrArray.join("<br111>").replace(/<br111>/g,"\n");
       },
       copyCode () {

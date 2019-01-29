@@ -36,6 +36,12 @@
           "tabbar",
           "x-header"
         ]
+      },
+      {
+        "title": "日期表单",
+        "values": [
+          "datatime-view"
+        ]
       }
     ]
   },
