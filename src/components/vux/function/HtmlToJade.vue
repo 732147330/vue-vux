@@ -5,11 +5,17 @@
   div(class="#{wrap}")
     p Html to Jade auto
     group(title="Html代码")
-      x-textarea(:show-counter="false", :rows="5", :height="220", @on-change="htmlToJade(htmlCode)",v-model="htmlCode", id = "abc")
+      div(slot="other")
+        x-button(mini, type="warn", @click.native="cleanCode()") 清空代码
+        x-button(mini, type="primary", @click.native="copyHtmlCode()") 复制代码
+      x-textarea(:show-counter="false", :rows="5", :height="220", @on-change="htmlToJade(htmlCode)",v-model="htmlCode")
+      textarea(id="htmlText", v-model="htmlCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
     group(title="Jade代码")
+      div(slot="other")
+        x-button(mini, type="primary", @click.native="copyJadeCode()") 复制代码
       x-textarea(:show-counter="false", :rows="5", :height="220" , v-model="jadeCode", readonly)
       textarea(id="jadeText", v-model="jadeCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
-    x-button(mini, type="primary", @click.native="copyCode()") 复制代码
+
 
 
 </template>
@@ -266,10 +272,18 @@
 
         this.jadeCode = newStrArray.join("<br111>").replace(/<br111>/g,"\n");
       },
-      copyCode () {
+      copyHtmlCode () {
+        var ele = document.getElementById("htmlText");
+        ele.select();
+        document.execCommand("Copy");
+      },
+      copyJadeCode () {
         var ele = document.getElementById("jadeText");
         ele.select();
         document.execCommand("Copy");
+      },
+      cleanCode () {
+        this.htmlCode = "";
       }
     },
   }

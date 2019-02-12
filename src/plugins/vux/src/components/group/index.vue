@@ -1,12 +1,14 @@
 <template>
   <div>
     <div
-    class="weui-cells__title"
+    class="weui-cells__title weui-cells__title_flex"
     v-if="title"
     :style="cleanStyle({
       color: titleColor
-    })"
-    v-html="title"></div>
+    })">
+      <div v-html="title"></div>
+      <slot name="other"></slot>
+    </div>
     <slot name="title"></slot>
     <div
     class="weui-cells"
@@ -45,7 +47,11 @@ export default {
     labelMarginRight: String,
     gutter: [String, Number],
     footerTitle: String,
-    footerTitleColor: String
+    footerTitleColor: String,
+  },
+  mounted:  function () {
+    console.log(this.title)
+    console.log(this.other)
   }
 }
 </script>
@@ -64,6 +70,12 @@ export default {
   margin-bottom: @group-footer-title-margin-bottom;
   padding-top: 0;
   font-size: 12px;
+}
+.weui-cells__title.weui-cells__title_flex{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 /* global config for group items */

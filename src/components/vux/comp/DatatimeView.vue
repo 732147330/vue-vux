@@ -11,7 +11,7 @@
       x-button(@click.native="toggleFormat", :disabled="format === 'YYYY-MM-DD HH'", type="primary")  切换时间格式
       x-button(@click.native="changeFormatAndValue", type="primary")  时间格式设置为 2019-10-23 10
       x-button(@click.native="showPopup = true", type="primary")  显示弹窗样式
-    //div(v-transfer-dom)
+    div(transfer-dom)
       popup(v-model="showPopup")
         datetime-view(v-model="value2")
 

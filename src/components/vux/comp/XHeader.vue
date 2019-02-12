@@ -34,7 +34,7 @@
         button-tab
           button-tab-item(selected) A
           button-tab-item B
-    div(v-transfer-dom)
+    div(transfer-dom)
       actionsheet(:menus="menus", v-model="showMenus", show-cancel)
 
 </template>

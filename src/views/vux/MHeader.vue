@@ -14,7 +14,7 @@
     x-header(:left-options="{showBack: true}", :right-options="{showMore: true}", @on-click-more="showMenus = true")
       span VUX
       x-icon(v-if="isHome", slot="overwrite-left", @click="showDrawer", type="navicon", size="35", style="fill:#fff;position:relative;top:-8px;left:-3px;")
-    div
+    div(transfer-dom)
       actionsheet(:menus="menus", v-model="showMenus", show-cancel)
 
 </template>

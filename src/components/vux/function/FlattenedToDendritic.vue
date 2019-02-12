@@ -105,23 +105,29 @@
           "        let list = vuxMenuDataTest;\n" +
           "        let tempObj = {};\n" +
           "        let dataArray= [];\n" +
-          "        //自定义下标数组\n" +
+          "        //自定义下标对象\n" +
           "        for(let i = 0; i < list.length; i++) {\n" +
           "          tempObj[list[i].index] = list[i]\n" +
           "        }\n" +
           "        console.log(tempObj)\n" +
           "        //数组嵌套\n" +
+          "        let count1 = 0\n" +
+          "        let count2 = 0;\n" +
           "        for(let i in tempObj){\n" +
           "          let en = tempObj[i];\n" +
-          "          let count  = en.index.split(\",\")[en.index.split(\",\").length-1]-1\n" +
+          "          // let count  = en.index.split(\",\")[en.index.split(\",\").length-1]-1\n" +
           "          let parentIndex = en.index.substring(0,en.index.lastIndexOf(\",\"));\n" +
           "          if(parentIndex != \"\"){\n" +
           "            if(!tempObj[parentIndex].children){\n" +
           "              tempObj[parentIndex].children = [];\n" +
+          "              count2 = 0;\n" +
+          "            }else{\n" +
+          "              count2 = tempObj[parentIndex].children.length;\n" +
           "            }\n" +
-          "            tempObj[parentIndex].children[count] = en;\n" +
+          "            tempObj[parentIndex].children[count2] = en;\n" +
           "          }else{\n" +
-          "            dataArray[count] = en;\n" +
+          "            dataArray[count1] = en;\n" +
+          "            count1++;\n" +
           "          }\n" +
           "        }\n" +
           "        console.log(dataArray)\n" +
@@ -141,7 +147,7 @@
           "\n" +
           "        // this.flattenedVals = JSON.stringify(vuxMenuDataTest);\n" +
           "        this.dendriticVals = JSON.stringify(dataArray);\n" +
-          "      }"
+          "      } "
       }
     },
     methods: {
@@ -149,23 +155,29 @@
         let list = vuxMenuDataTest;
         let tempObj = {};
         let dataArray= [];
-        //自定义下标数组
+        //自定义下标对象
         for(let i = 0; i < list.length; i++) {
           tempObj[list[i].index] = list[i]
         }
         console.log(tempObj)
         //数组嵌套
+        let count1 = 0
+        let count2 = 0;
         for(let i in tempObj){
           let en = tempObj[i];
-          let count  = en.index.split(",")[en.index.split(",").length-1]-1
+          // let count  = en.index.split(",")[en.index.split(",").length-1]-1
           let parentIndex = en.index.substring(0,en.index.lastIndexOf(","));
           if(parentIndex != ""){
             if(!tempObj[parentIndex].children){
               tempObj[parentIndex].children = [];
+              count2 = 0;
+            }else{
+              count2 = tempObj[parentIndex].children.length;
             }
-            tempObj[parentIndex].children[count] = en;
+            tempObj[parentIndex].children[count2] = en;
           }else{
-            dataArray[count] = en;
+            dataArray[count1] = en;
+            count1++;
           }
         }
         console.log(dataArray)

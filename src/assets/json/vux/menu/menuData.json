@@ -38,6 +38,12 @@
         ]
       },
       {
+        "title": "数据展示",
+        "values": [
+          "badge"
+        ]
+      },
+      {
         "title": "日期表单",
         "values": [
           "datatime-view"
