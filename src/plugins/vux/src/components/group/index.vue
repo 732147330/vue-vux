@@ -50,8 +50,7 @@ export default {
     footerTitleColor: String,
   },
   mounted:  function () {
-    console.log(this.title)
-    console.log(this.other)
+    // console.log(this.title)
   }
 }
 </script>

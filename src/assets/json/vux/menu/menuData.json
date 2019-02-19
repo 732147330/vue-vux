@@ -40,7 +40,10 @@
       {
         "title": "数据展示",
         "values": [
-          "badge"
+          "badge",
+          "card",
+          "clocker",
+          "countup"
         ]
       },
       {

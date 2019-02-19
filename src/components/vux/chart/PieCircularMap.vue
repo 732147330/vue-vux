@@ -9,10 +9,15 @@
       v-pie(:radius="0.85", series-field="name")
       v-legend(:options="legendOptions")
 
+    x-button(mini, plain, type="primary", @click.native="copyCode01()") 复制代码
+    x-button(mini, plain, @click.native="copyCode02()") 复制js代码
+
+    //复制文本框
+    textarea(id="codeText", v-model="tempCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
 </template>
 
 <script>
-  import { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale } from 'vux'
+  import { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale, XButton } from 'vux'
   import data from '../../../assets/json/vux/data/pieCircularMapData'
 
   const map = {}
@@ -22,9 +27,10 @@
   console.log(map)
 
   export default {
-    components: { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale },
+    components: { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale, XButton },
     data() {
       return {
+        tempCode: '',
         legendOptions: {
           position: 'right',
           itemFormatter (val) {
@@ -39,7 +45,60 @@
         map,
         data
       }
-    }
+    },
+    methods:{
+      copyCodeMethod () {
+        let timer = setInterval( () => {
+          var ele = document.getElementById("codeText");
+          ele.select();
+          document.execCommand("Copy");
+          console.log("copy success!!!")
+          clearInterval(timer);
+        }, 500)
+      },
+      copyCode01 () {
+        this.tempCode = '  v-chart(:data="data")\n' +
+          '      v-scale(y, :options="yOptions")\n' +
+          '      v-tooltip(disabled)\n' +
+          '      v-pie(:radius="0.85", series-field="name")\n' +
+          '      v-legend(:options="legendOptions")';
+        this.copyCodeMethod();
+      },
+      copyCode02 () {
+        this.tempCode = ' import { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale } from \'vux\'\n' +
+          '  import data from \'../../../assets/json/vux/data/pieCircularMapData\'\n' +
+          '\n' +
+          '  const map = {}\n' +
+          '  data.map(obj => {\n' +
+          '    map[obj.name] = obj.percent * 100 + \'%\'\n' +
+          '  })\n' +
+          '  console.log(map)\n' +
+          '\n' +
+          '  export default {\n' +
+          '    components: { VChart, VLine, VArea, VTooltip, VLegend, VBar, VPie, VScale },\n' +
+          '    data() {\n' +
+          '      return {\n' +
+          '        legendOptions: {\n' +
+          '          position: \'right\',\n' +
+          '          itemFormatter (val) {\n' +
+          '            return val + \'  \' + map[val]\n' +
+          '          }\n' +
+          '        },\n' +
+          '        yOptions: {\n' +
+          '          formatter (val) {\n' +
+          '            return val * 100 + \'%\'\n' +
+          '          }\n' +
+          '        },\n' +
+          '        map,\n' +
+          '        data\n' +
+          '      }\n' +
+          '    },\n' +
+          '    methods:{\n' +
+          '    },\n' +
+          '  }';
+        this.copyCodeMethod();
+      },
+    },
   }
 
 </script>

@@ -68,6 +68,7 @@ let $router = new Router({
 //跳转前触发
 $router.beforeEach((to, from, next) => {
   //console.log(to)
+
   next()
 })
 

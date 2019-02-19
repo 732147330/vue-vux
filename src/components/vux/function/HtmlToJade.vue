@@ -9,12 +9,13 @@
         x-button(mini, type="warn", @click.native="cleanCode()") 清空代码
         x-button(mini, type="primary", @click.native="copyHtmlCode()") 复制代码
       x-textarea(:show-counter="false", :rows="5", :height="220", @on-change="htmlToJade(htmlCode)",v-model="htmlCode")
-      textarea(id="htmlText", v-model="htmlCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
     group(title="Jade代码")
       div(slot="other")
         x-button(mini, type="primary", @click.native="copyJadeCode()") 复制代码
       x-textarea(:show-counter="false", :rows="5", :height="220" , v-model="jadeCode", readonly)
-      textarea(id="jadeText", v-model="jadeCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
+
+    //复制文本框
+    textarea(id="codeText", v-model="tempCode", style="width: 0;height: 0;overflow: hidden;border: none;background: transparent; position: absolute;z-index: -1")
 
 
 
@@ -92,6 +93,7 @@
           '      </popup>\n' +
           '    </div>',
         jadeCode: '',
+        tempCode: '',
       }
     },
     methods: {
@@ -273,17 +275,25 @@
         this.jadeCode = newStrArray.join("<br111>").replace(/<br111>/g,"\n");
       },
       copyHtmlCode () {
-        var ele = document.getElementById("htmlText");
-        ele.select();
-        document.execCommand("Copy");
+        this.tempCode = this.htmlCode;
+        this.copyCodeMethod();
       },
       copyJadeCode () {
-        var ele = document.getElementById("jadeText");
-        ele.select();
-        document.execCommand("Copy");
+        this.tempCode = this.jadeCode;
+        this.copyCodeMethod();
+      },
+      copyCodeMethod () {
+        let timer = setInterval( () => {
+          var ele = document.getElementById("codeText");
+          ele.select();
+          document.execCommand("Copy");
+          console.log("copy success!!!")
+          clearInterval(timer);
+        }, 500)
       },
       cleanCode () {
         this.htmlCode = "";
+        this.tempCode = "";
       }
     },
   }
