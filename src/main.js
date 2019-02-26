@@ -4,22 +4,26 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from './axios'
+
 import LoadingPlugin  from 'vux/src/plugins/loading'
 import AlertPlugin  from 'vux/src/plugins/alert'
 import ConfirmPlugin  from 'vux/src/plugins/confirm'
 import ToastPlugin  from 'vux/src/plugins/toast'
+import DatetimePlugin  from 'vux/src/plugins/datetime'
 
 //引用配置
 Vue.use(LoadingPlugin)
 Vue.use(AlertPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
+Vue.use(DatetimePlugin)
 
 //引用指令
 Vue.directive('transfer-dom', () => import('vux/src/directives/transfer-dom/'))
 // Vue.directive('transfer-dom', TransferDom)
 
 Vue.config.productionTip = false
+
 
 //设置全局属性
 Vue.prototype.axios = axios

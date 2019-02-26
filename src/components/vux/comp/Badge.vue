@@ -30,7 +30,7 @@
 </template>
 
 <script>
-  import { Badge, Group, Cell, XButton } from "vux";
+  import { Badge, Group, Cell, XButton } from 'vux';
   export default {
     components: { Badge, Group, Cell, XButton },
     data() {

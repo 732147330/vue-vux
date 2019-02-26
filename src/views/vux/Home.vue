@@ -2,7 +2,7 @@
   -var c = 'home'
   -var wrap = c + '__wrap'
 
-  div(class="#{wrap}")
+  div(class="#{wrap}", id="home")
     //group 分组
     //title 显示文字标题
     //cell属性

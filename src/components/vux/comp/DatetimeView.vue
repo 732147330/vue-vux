@@ -1,5 +1,5 @@
 <template lang="jade">
-  -var c = 'datatimeView'
+  -var c = 'datetimeView'
   -var wrap = c + '__wrap'
 
   div(class="#{wrap}")
@@ -133,7 +133,7 @@
 </script>
 
 <style>
-  @c datatimeView {
+  @c datetimeView {
     @d wrap {
       .info {
         padding-top: 15px;

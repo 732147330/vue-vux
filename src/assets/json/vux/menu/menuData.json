@@ -43,13 +43,85 @@
           "badge",
           "card",
           "clocker",
-          "countup"
+          "countup",
+          "flow",
+          "marquee",
+          "panel",
+          "previewer",
+          "qrcode",
+          "step",
+          "swiper",
+          "x-img",
+          "x-progress",
+          "x-table"
+        ]
+      },
+      {
+        "title": "数据表单",
+        "values": [
+          "cell-box",
+          "cell-formPreview",
+          "cell",
+          "check-icon",
+          "checker",
+          "checklist",
+          "form-preview",
+          "group",
+          "inlineX-number",
+          "inlineX-switch",
+          "picker",
+          "popup-picker",
+          "popup-radio",
+          "radio",
+          "range",
+          "rater",
+          "search",
+          "selector",
+          "swipeout",
+          "x-address",
+          "x-input",
+          "x-number",
+          "x-switch",
+          "x-textarea"
         ]
       },
       {
         "title": "日期表单",
         "values": [
-          "datatime-view"
+          "calendar",
+          "datetime-range",
+          "datetime-view",
+          "datetime",
+          "inline-calendar"
+        ]
+      },
+      {
+        "title": "布局",
+        "values": [
+          "divider",
+          "flexbox",
+          "grid",
+          "sticky",
+          "view-box"
+        ]
+      },
+      {
+        "title": "基础组件",
+        "values": [
+          "icon",
+          "x-button",
+          "x-icon"
+        ]
+      },
+      {
+        "title": "其他组件",
+        "values": [
+          "blur",
+          "color-picker",
+          "countdown",
+          "masker",
+          "scroller",
+          "wechat-emotion"
         ]
       }
     ]

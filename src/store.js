@@ -11,16 +11,23 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     routingState: 'home',
+    scrollData: 0,
     vuxMenuData
   },
   mutations: {
     SETROUTINGSTATE(state, payload) {
       state.routingState = payload
+    },
+    SETSCROLLDARA(state, payload) {
+      state.scrollData = payload
     }
   },
   actions: {
     setRoutingState({commit, state}, payload) {
       commit('SETROUTINGSTATE', payload)
+    },
+    setScrollData({commit, state}, payload) {
+      commit('SETSCROLLDARA', payload)
     }
   }
 })

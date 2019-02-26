@@ -67,15 +67,23 @@ let $router = new Router({
 
 //跳转前触发
 $router.beforeEach((to, from, next) => {
-  //console.log(to)
-
+  // console.log(to)
   next()
 })
 
 //跳转后触发
 $router.afterEach((to, from, next) => {
   //console.log(from)
-  setTimeout(() => window.scrollTo(0, 0), 0)
+  // setTimeout(() => window.scrollTo(0, 0), 0)
+  if(from.params.scrollTop != undefined){
+    to.params.scrollTop = from.params.scrollTop
+  }
+  if(to.name === "comp" || to.name === "chart"
+    || to.name === "function"){
+    setTimeout(() => window.scrollTo(0, to.params.scrollTop), 0)
+  }else{
+    setTimeout(() => window.scrollTo(0, 0), 0)
+  }
 })
 
 export default $router

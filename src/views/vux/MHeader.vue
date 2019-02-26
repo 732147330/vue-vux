@@ -1,4 +1,3 @@
-<script src="../../../node_modules/vux-loader/src/index.js"></script>
 <template lang="jade">
   -var c = 'm-header'
   -var wrap = c + '__wrap'
@@ -57,13 +56,13 @@
 <style>
   @c m-header {
     @d wrap {
-      .vux-header {/*position默认relative*/
-        /*display: flex;*/
-        position: absolute;
-        z-index: 500;
-        top: 0;
-        width: 100%;
-      }
+      /*position默认relative*/
+      /*display: flex;*/
+      position: absolute;
+      z-index: 500;
+      top: 0;
+      width: 100%;
+
     }
   }
 </style>

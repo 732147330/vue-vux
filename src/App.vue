@@ -21,7 +21,7 @@
             radio(v-model="showPlacement", :options="['left', 'right']", @on-change="onPlacementChange")
       //body-padding-top  用于调节与顶部的距离，相当与顶部的高
       //body-padding-bottom  用于调节与底部的距离，相当与底部的高
-      view-box(body-padding-top="46px", body-padding-bottom="150px")
+      view-box(body-padding-top="46px", body-padding-bottom="150px",style="height:100%;", ref="viewBox", id="a")
         m-header(:drawerShowValue.sync="drawerShowValue")
         router-view
         m-footer
@@ -32,6 +32,7 @@
   import MHeader from './views/vux/MHeader'
   import MFooter from './views/vux/MFooter'
   import { Drawer, ViewBox, Radio, Group, Cell } from "vux"
+  import  {mapState, mapActions} from 'vuex'
 
   export default {
     components: { ViewBox, Drawer, MHeader, MFooter, Radio, Group, Cell },
@@ -59,9 +60,24 @@
           this.showPlacementValue = val
         }, 400)
       },
-      onHide() {
+      onHide () {
         // console.log(drawerShowValue);
-      }
+      },
+    },
+    mounted() {
+      window.addEventListener("scroll", () => {
+        // console.log(this.$route.name)
+        if(this.$route.name === "comp" || this.$route.name === "chart"
+          || this.$route.name === "function"){
+          this.$route.params.scrollTop = this.$refs.viewBox.getScrollTop();
+          // console.log(this.$refs.viewBox.scrollTo(2500))
+          // console.log(this.$store.state.scrollData)
+          // this.$store.state.scrollData = this.$refs.viewBox.getScrollTop();
+          // this.$refs.viewBox.scrollTo(this.$store.state.scrollData)
+          // this.$store.dispatch('setScrollData', this.$refs.viewBox.getScrollTop())
+        }
+      },true)
+
     }
   }
 </script>

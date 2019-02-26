@@ -70,17 +70,17 @@
     .weui-tabbar__icon {
       padding-top: 10px;
     }
-    .weui-tabbar__label {
-      font-size: 15px;
-      line-height: 0.1;
-      //text-decoration: none;  /*必须根据浏览器给的样式名进行修改*/
-    }
     a:-webkit-any-link {
       text-decoration: none;
     }
   }
   @c m-footer {
     @d wrap {
+      font-size: 15px;
+      line-height: 0.1;
+      a:-webkit-any-link {
+        text-decoration: none;
+      }
     }
   }
 </style>
