@@ -23,6 +23,10 @@
         img(slot="icon-active" src="../../assets/img/vux/function_show.png")
         img(slot="icon" src="../../assets/img/vux/function_hide.png")
         span(slot="label") 函数
+      tabbar-item(:selected="selectMode", :badge="badge", link="/vux/mode")
+        img(slot="icon-active" src="../../assets/img/vux/mode_show.png")
+        img(slot="icon" src="../../assets/img/vux/mode_hide.png")
+        span(slot="label") 模板
 
 
 </template>
@@ -38,7 +42,8 @@
         badge: '2',
         selectComp: false,
         selectChart: false,
-        selectFun: false
+        selectFun: false,
+        selectMode: false
       }
     },
     watch: {
@@ -47,14 +52,23 @@
           this.selectComp = true;
           this.selectChart = false;
           this.selectFun = false;
+          this.selectMode = false;
         }else if(this.$route.name.indexOf('chart') > -1 ) {
           this.selectComp = false;
           this.selectChart = true;
           this.selectFun = false;
+          this.selectMode = false;
         }else if(this.$route.name.indexOf('function') > -1) {
           this.selectComp = false;
           this.selectChart = false;
           this.selectFun = true;
+          this.selectMode = false;
+        }
+        else if(this.$route.name.indexOf('mode') > -1) {
+          this.selectComp = false;
+          this.selectChart = false;
+          this.selectFun = false;
+          this.selectMode = true;
         }
       }
     },

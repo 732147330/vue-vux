@@ -159,7 +159,7 @@
         for(let i = 0; i < list.length; i++) {
           tempObj[list[i].index] = list[i]
         }
-        console.log(tempObj)
+        // console.log(tempObj)
         //数组嵌套
         let count1 = 0
         let count2 = 0;
@@ -180,7 +180,7 @@
             count1++;
           }
         }
-        console.log(dataArray)
+        // console.log(dataArray)
         //递归取数
         function getArray(data){
           for(var i in data){

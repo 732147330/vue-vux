@@ -241,6 +241,21 @@
         ]
       }
     ]
+  },
+  {
+    "title": "mode",
+    "name": "模版",
+    "values": [
+      {
+        "title": "基础模版",
+        "names": [
+          "基础添加与删除"
+        ],
+        "values": [
+          "basic-addAndDel"
+        ]
+      }
+    ]
   }
 ]
 

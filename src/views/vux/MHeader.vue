@@ -37,7 +37,7 @@
     watch: {
       $route(to,from) {
         console.log('路由跳转到'+ this.$route.name);
-        if(this.$route.name === 'comp' || this.$route.name === 'chart' || this.$route.name === 'function' || this.$route.name === 'comp-drawer') {
+        if(this.$route.name === 'comp' || this.$route.name === 'chart' || this.$route.name === 'function' || this.$route.name === 'mode' || this.$route.name === 'comp-drawer') {
           this.isHome = true;
         }else {
           this.isHome = false;

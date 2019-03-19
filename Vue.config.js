@@ -8,8 +8,10 @@ function resolve(dir) {
 module.exports = {
   // 基本路径
   baseUrl: '/vux/',
+  // baseUrl: './',
   // 输出文件目录
-  outputDir: 'vux',
+  // outputDir: 'vux',
+  outputDir: 'www',
   // eslint-loader 是否在保存的时候检查
   lintOnSave: true,
   chainWebpack: (config) => {
@@ -64,5 +66,18 @@ module.exports = {
       options: {},
       plugins: ['vux-ui']
     })
-  }
+  },
+  //modify prefetch plugin
+  // chainWebpack: config => {
+    // remove the prefetch plugin
+    // config.plugins.delete('prefetch-app')
+
+    // or:
+    // modify its options:
+    // config.plugin('prefetch').tap(options => {
+    //   options[0].fileBlacklist = options[0].fileBlacklist || []
+    //   options[0].fileBlacklist.push(/myasyncRoute(.)+?\.js$/)
+    //   return options
+    // })
+  // },
 };

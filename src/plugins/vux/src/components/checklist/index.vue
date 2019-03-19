@@ -23,7 +23,7 @@
                  :disabled="isDisabled(getKey(one))">
           <i class="weui-icon-checked vux-checklist-icon-checked"></i>
         </div>
-        <div class="weui-cell__bd">
+        <div class="weui-cell__bd" :id="`fontStyle_${index}`">
           <p v-html="getValue(one)"></p>
           <inline-desc v-if="getInlineDesc(one)">{{ getInlineDesc(one) }}</inline-desc>
         </div>

@@ -17,7 +17,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (chart.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "chart" */ './views/vux/Chart.vue')
+    component: () => import(/* webpackPrefetch: false */ './views/vux/Chart.vue')
   },
   {
     path: '/vux/function',
@@ -25,7 +25,15 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (function.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "function" */ './views/vux/Function.vue')
+    component: () => import(/* webpackPrefetch: false */ './views/vux/Function.vue')
+  },
+  {
+    path: '/vux/mode',
+    name: 'mode',
+    // route level code-splitting
+    // this generates a separate chunk (function.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackPrefetch: false */ './views/vux/Mode.vue')
   }
 ]
 //分配路由器
@@ -44,7 +52,7 @@ var distributeRouter = (menu,type) => {
           routes.push({
             path: `/${type}/${v.title}/${v2}`,
             name: `${v.title}-${v2}`,
-            component: () => import(`./components/vux/${v.title}/${temp}.vue`)
+            component: () => import(/* webpackPrefetch: false */`./components/vux/${v.title}/${temp}.vue`)
           })
         })
       })
@@ -85,5 +93,20 @@ $router.afterEach((to, from, next) => {
     setTimeout(() => window.scrollTo(0, 0), 0)
   }
 })
+
+// $router.onError((error) => {
+//   const pattern = /Loading chunk (\d)+ failed/g;
+//   const isChunkLoadFailed = error.message.match(pattern);
+//   const targetPath = router.history.pending.fullPath;
+//   console.log(error.message);
+//   console.log(targetPath);
+//   if(isChunkLoadFailed){
+//     // $router.replace(targetPath);
+//     // console.log($router);
+//     // console.log(targetPath);
+//     location.reload();
+//   }
+// })
+
 
 export default $router
