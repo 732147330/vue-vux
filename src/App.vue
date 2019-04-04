@@ -33,7 +33,6 @@
   import MFooter from './views/vux/MFooter'
   import { Drawer, ViewBox, Radio, Group, Cell } from "vux"
   import  {mapState, mapActions} from 'vuex'
-
   export default {
     components: { ViewBox, Drawer, MHeader, MFooter, Radio, Group, Cell },
     data() {

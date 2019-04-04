@@ -239,6 +239,36 @@
         "values": [
           "FlattenedToDendritic"
         ]
+      },
+      {
+        "title": "算法功能",
+        "names": [
+          "宝石与石头(GemsAndStones)",
+          "TinyURL 的加密与解密(EncodeAndDeCodeOfTinyURL)",
+          "按递增顺序显示卡牌(DisplayCardsInIncrementalOrder)",
+          "保持城市天际线(MaintainingTheUrbanSkyline)",
+          "大小写字母互转(ConversionOfUpperAndLowerCaseLetters)"
+        ],
+        "values": [
+          "GemsAndStones",
+          "EncodeAndDeCodeOfTinyURL",
+          "DisplayCardsInIncrementalOrder",
+          "MaintainingTheUrbanSkyline",
+          "ConversionOfUpperAndLowerCaseLetters"
+        ]
+      },
+      {
+        "title": "二叉树算法",
+        "names": [
+          "二叉搜索树的范围和(RangeSumOfBinarySearchTrees)",
+          "最大二叉树(MaximumBinaryTree)",
+          "二叉搜索树中的搜索(SearchInBinarySearchTree)"
+        ],
+        "values": [
+          "RangeSumOfBinarySearchTrees",
+          "MaximumBinaryTree",
+          "SearchInBinarySearchTree"
+        ]
       }
     ]
   },

@@ -157,11 +157,11 @@
         let dataArray= [];
         //自定义下标对象
         for(let i = 0; i < list.length; i++) {
-          tempObj[list[i].index] = list[i]
+          tempObj[list[i].index] = list[i];
         }
         // console.log(tempObj)
         //数组嵌套
-        let count1 = 0
+        let count1 = 0;
         let count2 = 0;
         for(let i in tempObj){
           let en = tempObj[i];
